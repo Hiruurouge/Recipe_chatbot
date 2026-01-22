@@ -1,0 +1,94 @@
+.profile-container {
+    max-width: 900px;
+    padding: 20px;
+    background-color: #444;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.user-info-card,
+.password-card,
+.tag-card {
+    flex-basis: calc(50% - 10px);
+    color: #fff;
+}
+
+@media (max-width: 600px) {
+    .user-info-card,
+    .password-card,
+    .tag-card {
+        flex-basis: 100%;
+        margin-right: 0;
+    }
+}
+
+mat-card-title {
+    text-align: center;
+    margin: 10px auto;
+}
+
+mat-card {
+    margin-bottom: 20px;
+    background-color: #555;
+    color: #fff;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+mat-form-field .mat-input-element {
+    color: #fff;
+}
+
+button {
+    margin-top: 10px;
+    float: right;
+}
+
+.delete-link {
+    display: inline-flex;
+    align-items: center;
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.delete-link:hover {
+    color: darkred;
+}
+
+.delete-link .mat-icon {
+    margin-right: 5px;
+}
+
+.action {
+    position: absolute;
+    top: 125px;
+    right: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+.success {
+    background-color: #d4edda;
+    border: 2px solid #155724;
+    color: #155724;
+}
+
+.danger {
+    background-color: #f8d7da;
+    border: 2px solid #721c24;
+    color: #721c24;
+}
