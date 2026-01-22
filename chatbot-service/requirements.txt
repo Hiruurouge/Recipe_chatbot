@@ -1,0 +1,16 @@
+fastapi==0.95.1
+numpy
+pycparser==2.21
+pydantic==1.10.7
+pymysql==1.0.3
+python-dotenv==1.0.0
+sqlalchemy==2.0.9
+uvicorn==0.21.1
+spacy
+scikit-learn
+tensorflow
+keras
+nltk
+numpy
+requests
+pyparsing

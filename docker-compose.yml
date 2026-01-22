@@ -1,0 +1,129 @@
+version: '3.3'
+
+services:
+  db:
+    build: ./database
+    ports:
+      - ${MYSQL_PORT}:${MYSQL_PORT}
+    env_file:
+      - ./.env
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./.env:/code/src/.env
+    networks:
+      backend: 
+        ipv4_address: "${MYSQL_URL}"
+    healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+        timeout: 10s
+        retries: 6
+  chatmessage-service:
+    build: ./chatmessage-service
+    ports:
+      - ${CHATMESSAGE_PORT}:${CHATMESSAGE_PORT}
+    env_file:
+      - ./.env
+    volumes:
+      - ./models:/code/models
+      - ./schemas:/code/schemas
+      - ./.env:/code/src/.env
+    networks:
+      backend:
+        ipv4_address: "${CHATMESSAGE_IP}"  
+
+  tag-service:
+    build: ./tag-service
+    ports:
+      - ${TAG_PORT}:${TAG_PORT}
+    env_file:
+      - ./.env
+    volumes:
+      - ./models:/code/models
+      - ./schemas:/code/schemas
+      - ./.env:/code/src/.env
+    networks:
+      backend:
+        ipv4_address: "${TAG_IP}"   
+             
+  chatbot-service:
+    build: ./chatbot-service
+    ports:
+      - ${CHAT_PORT}:${CHAT_PORT}
+    env_file:
+      - ./.env
+    volumes: 
+      - ./models:/code/models
+      - ./schemas:/code/schemas
+      - ./.env:/code/src/.env
+    networks:
+      backend: 
+        ipv4_address: "${CHAT_IP}"
+
+  reco-service:
+    build: ./reco-service
+    depends_on:
+      - db
+    ports:
+      - ${RECO_PORT}:${RECO_PORT}
+    env_file:
+      - ./.env
+    volumes:
+      - ./models:/code/models
+      - ./schemas:/code/schemas
+      - ./.env:/code/src/.env
+    networks:
+      backend:
+        ipv4_address: "${RECO_IP}" 
+
+  gateway-service:
+    build: ./gateway-service
+    ports:
+      - ${GATEWAY_PORT}:${GATEWAY_PORT}
+    env_file:
+      - ./.env
+    volumes:
+      - ./models:/code/models
+      - ./schemas:/code/schemas
+      - ./.env:/code/src/.env
+    networks:
+      backend:
+        ipv4_address: "${GATEWAY_IP}"
+    
+  auth-service:
+    build: ./auth-service
+    ports:
+      - ${AUTH_PORT}:${AUTH_PORT}
+    env_file:
+      - ./.env
+    volumes:
+      - ./models:/code/models
+      - ./schemas:/code/schemas
+      - ./.env:/code/src/.env
+    networks:
+      backend:
+        ipv4_address: "${AUTH_IP}"
+
+  user-service:
+    build: ./user-service
+    ports:
+      - ${USER_PORT}:${USER_PORT}
+    env_file:
+      - ./.env
+    volumes:
+      - ./models:/code/models
+      - ./schemas:/code/schemas
+      - ./.env:/code/src/.env
+    networks:
+      backend:
+        ipv4_address: "${USER_IP}"
+
+networks:
+  backend: 
+    driver: bridge
+    ipam: 
+      config:
+        - subnet: "${NETWORK_BACK}/27"
+          gateway: "${NETWORK_BACK_GATEWAY}"
+volumes:
+  mysql-data:
+
